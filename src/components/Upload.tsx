@@ -12,7 +12,7 @@ const Upload = () => {
   // Traditional upload
   const ref = useRef<HTMLInputElement>(null);
   const [url, setUrl] = useState('');
-  const handleUpload: MouseEventHandler<HTMLElement> = (e) => {
+  const handleUpload: MouseEventHandler<HTMLElement> = () => {
     ref.current?.click();
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
