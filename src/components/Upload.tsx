@@ -5,15 +5,14 @@ import {
   useRef,
   useState,
 } from 'react';
-import Button from './Button';
 import clsx from 'clsx';
+import { ReactComponent as Icon } from 'assets/images/upload/download.svg';
 
 const Upload = () => {
   // Traditional upload
   const ref = useRef<HTMLInputElement>(null);
   const [url, setUrl] = useState('');
-  const handleUpload: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
+  const handleUpload: MouseEventHandler<HTMLElement> = (e) => {
     ref.current?.click();
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -33,6 +32,9 @@ const Upload = () => {
     e.preventDefault();
     e.stopPropagation();
     setDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    setUrl(URL.createObjectURL(file));
   };
 
   return (
@@ -40,8 +42,8 @@ const Upload = () => {
       <div
         className={clsx(
           'bg-white rounded-lg p-3',
-          'max-w-lg transition-all h-80',
-          'flex',
+          'max-w-lg transition-all h-72',
+          'flex cursor-pointer',
           dragging && '!p-5 bg-gray-50'
         )}
         onDrag={handleDrag}
@@ -51,13 +53,14 @@ const Upload = () => {
         onDragEnd={handleLeave}
         onDragLeave={handleLeave}
         onDrop={handleLeave}
+        onClick={handleUpload}
       >
         <div
           className={clsx(
             'rounded-lg border',
             'border-dashed border-2',
             'flex-1 flex justify-center items-center',
-            'pointer-events-none'
+            dragging && 'pointer-events-none'
           )}
         >
           <input
@@ -69,12 +72,16 @@ const Upload = () => {
             name="upload"
             className="hidden"
           />
-          <div>
+          <div
+            className={clsx(
+              'flex justify-center items-center',
+              'flex-col',
+              url && 'hidden'
+            )}
+          >
+            <Icon className={'w-32 mb-2'} />
             <div className={clsx('select-none', dragging && 'hidden')}>
-              <span
-                onClick={handleUpload}
-                className={clsx('font-bold cursor-pointer')}
-              >
+              <span className={clsx('font-bold cursor-pointer')}>
                 Choose a file
               </span>{' '}
               <span>or drag it here.</span>
@@ -83,7 +90,17 @@ const Upload = () => {
               Drop to upload.
             </div>
           </div>
-          <img src={url} alt="" />
+          <img
+            className={clsx(
+              'h-auto w-auto object-contain',
+              'max-w-full max-h-full rounded-lg',
+              !url && 'hidden',
+              dragging && 'pointer-events-none'
+            )}
+            src={url}
+            alt=""
+            draggable={false}
+          />
         </div>
       </div>
     </>
