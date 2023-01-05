@@ -56,7 +56,8 @@ const Upload = () => {
           className={clsx(
             'rounded-lg border',
             'border-dashed border-2',
-            'flex-1 flex justify-center items-center'
+            'flex-1 flex justify-center items-center',
+            'pointer-events-none'
           )}
         >
           <input
@@ -69,7 +70,7 @@ const Upload = () => {
             className="hidden"
           />
           <div>
-            <div className="select-none">
+            <div className={clsx('select-none', dragging && 'hidden')}>
               <span
                 onClick={handleUpload}
                 className={clsx('font-bold cursor-pointer')}
@@ -77,6 +78,9 @@ const Upload = () => {
                 Choose a file
               </span>{' '}
               <span>or drag it here.</span>
+            </div>
+            <div className={clsx('hidden', dragging && '!block')}>
+              Drop to upload.
             </div>
           </div>
           <img src={url} alt="" />
