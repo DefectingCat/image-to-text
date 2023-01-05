@@ -1,12 +1,11 @@
 import clsx from 'clsx';
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 
 type ButtonProps = {
-  className?: string;
   children?: ReactNode;
-};
+} & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
-const Button = ({ className, children }: ButtonProps) => {
+const Button = ({ children, className, ...rest }: ButtonProps) => {
   return (
     <>
       <button
@@ -24,6 +23,7 @@ const Button = ({ className, children }: ButtonProps) => {
           'disabled:dark:hover:border-transparent',
           className
         )}
+        {...rest}
       >
         {children}
       </button>
