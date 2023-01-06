@@ -60,7 +60,7 @@ const Upload = () => {
             'rounded-lg border',
             'border-dashed border-2',
             'flex-1 flex justify-center items-center',
-            dragging && 'pointer-events-none'
+            'pointer-events-none'
           )}
         >
           <input
@@ -79,7 +79,7 @@ const Upload = () => {
               url && 'hidden'
             )}
           >
-            <Icon className={'w-32 mb-2'} />
+            <Icon className={clsx('w-32 mb-2')} />
             <div className={clsx('select-none', dragging && 'hidden')}>
               <span className={clsx('font-bold cursor-pointer')}>
                 Choose a file
@@ -94,8 +94,7 @@ const Upload = () => {
             className={clsx(
               'h-auto w-auto object-contain',
               'max-w-full max-h-full rounded-lg',
-              !url && 'hidden',
-              dragging && 'pointer-events-none'
+              !url && 'hidden'
             )}
             src={url}
             alt=""
