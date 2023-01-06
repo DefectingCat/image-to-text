@@ -79,7 +79,9 @@ const Upload = () => {
               url && 'hidden'
             )}
           >
-            <Icon className={clsx('w-32 mb-2')} />
+            <Icon
+              className={clsx('w-32 mb-2 transition-all', dragging && 'w-28')}
+            />
             <div className={clsx('select-none', dragging && 'hidden')}>
               <span className={clsx('font-bold cursor-pointer')}>
                 Choose a file
